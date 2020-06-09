@@ -38,14 +38,14 @@ public class RemindersActivity extends AppCompatActivity implements View.OnClick
 
         // We must extract those values from the payload
         String title = getIntent().getStringExtra("ARG_TITLE");
+        String notes = getIntent().getStringExtra("ARG_NOTES");
         String date = getIntent().getStringExtra("ARG_DATE");
         String time = getIntent().getStringExtra("ARG_TIME");
-        String repeating = getIntent().getStringExtra("ARG_REPEAT");
 
         Log.i("Logging -- Func_s", String.format("title %s", title));
+        Log.i("Logging -- Func_s", String.format("notes %s", notes));
         Log.i("Logging -- Func_s", String.format("date %s", date));
         Log.i("Logging -- Func_s", String.format("time %s", time));
-        Log.i("Logging -- Func_s", String.format("repeating %s", repeating));
         
         setContentView(R.layout.activity_reminders);
         Button home = (Button) findViewById(R.id.button_home);

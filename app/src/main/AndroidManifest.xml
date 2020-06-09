@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ClickedReminderActivity"></activity>
         <activity android:name=".AddReminderActivity" />
         <activity android:name=".RemindersActivity" />
         <activity android:name=".StopwatchActivity" />
@@ -30,7 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".AlarmReceiver"/>
+
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

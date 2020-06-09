@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,7 +40,6 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
     EditText noteInput;
     EditText dateInput;
     EditText timeInput;
-    EditText repeatInput;
     DatabaseHelper mDatabaseHelper;
 
     Calendar mCurrentTime;
@@ -59,11 +59,7 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         timeInput = (EditText) findViewById(R.id.theTime);
         titleInput = (EditText) findViewById(R.id.reminderTitle);
         noteInput = (EditText) findViewById(R.id.reminderNote);
-        spinner = (Spinner) findViewById(R.id.repeating);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddReminderActivity.this, android.R.layout.simple_spinner_item, list);
-
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
 
         datePicker.setOnClickListener(this);
         timePicker.setOnClickListener(this);
@@ -99,9 +95,9 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
 
         String title = titleInput.getText().toString();
+        String notes = noteInput.getText().toString();
         String dateFromInput = dateInput.getText().toString();
         String timeFromInput = timeInput.getText().toString();
-        String repeatFromInput = spinner.getSelectedItem().toString();
 
         switch (v.getId()) {
 
@@ -157,20 +153,18 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
             case R.id.button_create:
                 Intent intent = new Intent( this, RemindersActivity.class);
                 intent.putExtra("ARG_TITLE", title);
+                intent.putExtra("ARG_NOTES", notes);
                 intent.putExtra("ARG_DATE", dateFromInput);
                 intent.putExtra("ARG_TIME", timeFromInput);
-                intent.putExtra("ARG REPEAT", repeatFromInput);
 
                 String alarmString = String.valueOf(timeInput.getText());
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 Intent alarmIntent = new Intent(this, AlarmReceiver.class);
                 alarmIntent.putExtra(AlarmReceiver.REMINDER_TEXT, title);
                 PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
-
-
+                alarmManager.set(AlarmManager.RTC_WAKEUP, mCurrentTime.getTimeInMillis(), broadcast);
 
                 startActivity(intent);
-                startActivity(alarmIntent);
                 break;
 
             case R.id.button_cancel:
