@@ -160,7 +160,10 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
                 String alarmString = String.valueOf(timeInput.getText());
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-                alarmIntent.putExtra(AlarmReceiver.REMINDER_TEXT, title);
+                //Unsure if this is correct
+                alarmIntent.putExtra(AlarmReceiver.REMINDER_TITLE, title);
+                alarmIntent.putExtra(AlarmReceiver.REMINDER_NOTES, notes);
+                //^^^
                 PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, mCurrentTime.getTimeInMillis(), broadcast);
 

@@ -16,8 +16,8 @@ public class ClickedReminderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clicked_reminder);
 
-        String title = getIntent().getStringExtra("ARG_TITLE");
-        String notes = getIntent().getStringExtra("ARG_NOTES");
+        String title = getIntent().getStringExtra("REMINDER_TITLE");
+        String notes = getIntent().getStringExtra("REMINDER_NOTES");
 
         Log.i("Logging -- Func_s", String.format("title %s", title));
         Log.i("Logging -- Func_s", String.format("notes %s", notes));

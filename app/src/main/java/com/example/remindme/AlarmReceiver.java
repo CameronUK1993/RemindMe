@@ -17,15 +17,20 @@ import androidx.core.app.NotificationManagerCompat;
 import java.util.Date;
 
 public class AlarmReceiver extends BroadcastReceiver {
-    public static final String REMINDER_TEXT = "REMINDER_TEXT";
+    public static final String REMINDER_TITLE = "REMINDER_TITLE";
+    public static final String REMINDER_NOTES = "REMINDER_NOTES";
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String reminderText = intent.getStringExtra(REMINDER_TEXT);
+        String reminderTitle = intent.getStringExtra(REMINDER_TITLE);
+        String reminderNotes = intent.getStringExtra(REMINDER_NOTES);
 
-        // Change this intent to whatever activity you want to start on notification click.
         Intent intentAction = new Intent(context, ClickedReminderActivity.class);
+        // Can't get the info received from AddReminderActivity to send from here to ClickedReminderActivity
+        intentAction.putExtra("REMINDER_TITLE", reminderTitle);
+        intentAction.putExtra("REMINDER_NOTES", reminderNotes);
+        // ^^^^
         PendingIntent pi = PendingIntent.getActivity(context, 0, intentAction, 0);
         String channelId = "Channel_id";
 
@@ -34,7 +39,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setTicker("Reminder!")
                 .setWhen(new Date().getTime())
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentText(reminderText)
+                .setContentText(reminderTitle)
                 .setContentIntent(pi)
                 .build();
 
