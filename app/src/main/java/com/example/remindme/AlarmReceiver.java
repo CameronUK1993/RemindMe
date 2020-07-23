@@ -14,23 +14,37 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.remindme.models.Reminder;
+import com.example.remindme.utility.RemindersRepository;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AlarmReceiver extends BroadcastReceiver {
     public static final String REMINDER_TITLE = "REMINDER_TITLE";
-    public static final String REMINDER_NOTES = "REMINDER_NOTES";
+    public static final String REMINDER_ID = "REMINDER_ID";
+
+
+
+    private static final String TAG = "AlarmReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        Log.d(TAG, "onReceive: " + intent.getStringExtra(REMINDER_TITLE));
+        String id = intent.getStringExtra(REMINDER_ID);
+        Log.d(TAG, "onReceive: " + id);
+        RemindersRepository instance = RemindersRepository.getInstance();
+        Reminder reminder = instance.getReminder(id);
+
+        Log.i("Logging -- Func_s", String.format("reminder %s", id));
+
         String reminderTitle = intent.getStringExtra(REMINDER_TITLE);
-        String reminderNotes = intent.getStringExtra(REMINDER_NOTES);
 
         Intent intentAction = new Intent(context, ClickedReminderActivity.class);
-        // Can't get the info received from AddReminderActivity to send from here to ClickedReminderActivity
-        intentAction.putExtra("REMINDER_TITLE", reminderTitle);
-        intentAction.putExtra("REMINDER_NOTES", reminderNotes);
-        // ^^^^
+        intentAction.putExtra(ClickedReminderActivity.ARG_REMINDER_ID, REMINDER_ID);
+
         PendingIntent pi = PendingIntent.getActivity(context, 0, intentAction, 0);
         String channelId = "Channel_id";
 
