@@ -19,7 +19,7 @@ public class ExtrasActivity extends AppCompatActivity implements View.OnClickLis
         stopwatch.setOnClickListener(this);
         Button home = (Button) findViewById(R.id.button_home);
         home.setOnClickListener(this);
-        /*Directs the call to the created onClick method*/
+        //Sets up OnClickListener to the buttons associated with each id
     }
 
     public void onClick(View v) {
@@ -42,7 +42,7 @@ public class ExtrasActivity extends AppCompatActivity implements View.OnClickLis
 
             default:
                 break;
-            /*this method allows for all the onClicks to be handled in one place rather than creating a separate method for each button click*/
+            //When any of the buttons are clicked, the associated intent starts and directs the app to the specified activity
         }
     }
 

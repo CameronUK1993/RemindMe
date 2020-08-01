@@ -37,6 +37,16 @@
         android:layout_height="10dp" />
 
     <Switch
+        android:id="@+id/vibration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/vibrate" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <Switch
         android:id="@+id/alarmPause"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +54,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="200dp" />
 
     <Button
         android:id="@+id/button_home"

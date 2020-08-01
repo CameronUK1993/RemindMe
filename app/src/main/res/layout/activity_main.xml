@@ -7,8 +7,7 @@
     android:background="#FFFFFF"
     tools:context=".MainActivity">
 
-    <!--Title of app-->
-
+    
     <TextView
         android:id="@+id/remindMe"
         android:layout_width="329dp"

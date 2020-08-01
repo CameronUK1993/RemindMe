@@ -21,6 +21,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(introIntent);
                 finish();
             }
-        },Intro_Screen); /*causes 5 second delay before moving onto the home activity*/
+        },Intro_Screen); //Causes 5 second delay before moving to HomeActivity
     }
 }

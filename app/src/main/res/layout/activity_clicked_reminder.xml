@@ -26,14 +26,14 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="20dp" />
 
     <EditText
         android:id="@+id/ClickedReminderNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:gravity="start|top"
+        android:gravity="center"
         android:textSize="20sp"
         android:padding="5dp"
         android:textColor="#000000"
@@ -42,7 +42,39 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="80dp" />
+        android:layout_height="20dp" />
+
+    <EditText
+        android:id="@+id/ClickedReminderDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:textColor="#000000"
+        android:inputType="textMultiLine"
+        android:text="This is where the date will be positioned"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <EditText
+        android:id="@+id/ClickedReminderTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:textColor="#000000"
+        android:inputType="textMultiLine"
+        android:text="This is where the time will be positioned"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
 
     <ImageView
         android:id="@+id/ClickedReminderImage"
@@ -52,16 +84,15 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="80dp" />
+        android:layout_height="20dp" />
 
     <Button
-        android:id="@+id/button_home"
+        android:id="@+id/button_back"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:background="@drawable/round_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/home_button"
+        android:text="@string/back_button"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"

@@ -58,12 +58,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         } catch (Exception e) {
         }
+        //This method utilises the Seekbar to adjust the volume within the app.
     }
 
     public void openHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-
+        //When the Home button is clicked, the intent starts and the HomeActivity class is opened
     }
 
 }

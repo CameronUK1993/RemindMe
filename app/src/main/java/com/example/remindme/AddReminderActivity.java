@@ -1,5 +1,6 @@
 package com.example.remindme;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +11,11 @@ import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,22 +29,26 @@ import android.widget.Toast;
 
 import com.example.remindme.models.Reminder;
 import com.example.remindme.utility.DatabaseHelper;
+import com.example.remindme.utility.RemindersRepository;
 
 import java.util.Calendar;
 
 public class AddReminderActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private static final String TAG = "AddReminderActivity";
-    Button datePicker, timePicker;
+    Button datePicker, timePicker, imagePicker;
     private int mYear, mMonth, mDay, mHour, mMinute;
     private Spinner spinner;
     private static final String[] list = {"Never", "Daily", "Weekly", "Monthly"};
-    String title, note, date, time, repeat;
+    String title, note, date, time, image;
     EditText titleInput;
     EditText noteInput;
     EditText dateInput;
     EditText timeInput;
+    EditText imageInput;
     DatabaseHelper mDatabaseHelper;
+
+    private static final int RESULT_LOAD_IMAGE = 1;
 
     Calendar mCurrentTime;
     AlarmManager alarmManager;
@@ -55,6 +63,7 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
         datePicker = (Button) findViewById(R.id.pickDate);
         timePicker = (Button) findViewById(R.id.pickTime);
+        imagePicker = (Button) findViewById(R.id.pickImage);
         dateInput = (EditText) findViewById(R.id.theDate);
         timeInput = (EditText) findViewById(R.id.theTime);
         titleInput = (EditText) findViewById(R.id.reminderTitle);
@@ -63,13 +72,15 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
         datePicker.setOnClickListener(this);
         timePicker.setOnClickListener(this);
+        imagePicker.setOnClickListener(this);
 
         Button cancel = (Button) findViewById(R.id.button_cancel);
         cancel.setOnClickListener(this);
         Button create = (Button) findViewById(R.id.button_create);
         create.setOnClickListener(this);
 
-        Reminder reminder = new Reminder("some title", "some notes", "some timestamp");
+        Reminder reminder = new Reminder("some title", "some notes", "some date", "some time");
+        //Specifying what is needed for something to be considered a Reminder (Reminder class model)
 
         mDatabaseHelper = new DatabaseHelper(this);
 
@@ -84,6 +95,7 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
             AddData(newEntry);
         } else {
             toastMessage("You must fill in the text fields!");
+            //If the user has not input a title for the reminder, a toast message will pop up notifying them
         }
 
         mCurrentTime = Calendar.getInstance();
@@ -96,8 +108,9 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
         String title = titleInput.getText().toString();
         String notes = noteInput.getText().toString();
-        String dateFromInput = dateInput.getText().toString();
-        String timeFromInput = timeInput.getText().toString();
+        String date = dateInput.getText().toString();
+        String time = timeInput.getText().toString();
+        //Gathering the user inputted data and ensuring it is in a String format
 
         switch (v.getId()) {
 
@@ -122,6 +135,8 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
                         }
                     }, mYear, mMonth, mDay);
                     datePickerDialog.show();
+                    //When the button is clicked, the date picker is displayed so the user can select a date.
+                    //The selected date is then displayed in the edit text field next to the button.
                 }
                 break;
 
@@ -147,22 +162,30 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
                         }
                     }, mHour, mMinute, true);
                     timePickerDialog.show();
+                    //When the button is clicked, the time picker is displayed so the user can select a time.
+                    //The selected time is then displayed in the edit text field next to the button.
                 }
+                break;
+
+            case R.id.pickImage:
+                Intent imageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(imageIntent, RESULT_LOAD_IMAGE);
+                //unsure where to go next with images. Need to show name of image on text line and then send with other stuff to alarm receiver and then onto ClickedReminderActivity
                 break;
 
             case R.id.button_create:
                 Intent intent = new Intent( this, RemindersActivity.class);
-                intent.putExtra("ARG_TITLE", title);
-                intent.putExtra("ARG_NOTES", notes);
-                intent.putExtra("ARG_DATE", dateFromInput);
-                intent.putExtra("ARG_TIME", timeFromInput);
 
-                String alarmString = String.valueOf(timeInput.getText());
+                RemindersRepository instance = RemindersRepository.getInstance();
+                Reminder reminder = new Reminder(title, notes, date, time);
+                instance.saveReminder(reminder);
+
+
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 Intent alarmIntent = new Intent(this, AlarmReceiver.class);
                 //Unsure if this is correct
-                alarmIntent.putExtra(AlarmReceiver.REMINDER_TITLE, title);
-                alarmIntent.putExtra(AlarmReceiver.REMINDER_NOTES, notes);
+                alarmIntent.putExtra(AlarmReceiver.REMINDER_TITLE, reminder.getTitle());
+                alarmIntent.putExtra(AlarmReceiver.REMINDER_ID, reminder.getId());
                 //^^^
                 PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, mCurrentTime.getTimeInMillis(), broadcast);
@@ -218,4 +241,12 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
+            Uri selectedImage = data.getData();
+
+        }
+    }
 }

@@ -22,11 +22,12 @@ public class SupportActivity extends AppCompatActivity {
                 openHomePage();
             }
         });
+        // Setting up an onClickListener for the Home button
     }
 
     public void openHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-
+        // When the Home button is clicked, the intent starts and the HomeActivity class is opened
     }
 }

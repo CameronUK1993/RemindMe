@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,35 +20,33 @@ import android.widget.ListView;
 import com.example.remindme.adapters.RemindersRecyclerAdapter;
 import com.example.remindme.models.Reminder;
 import com.example.remindme.utility.DatabaseHelper;
+import com.example.remindme.utility.RemindersRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class RemindersActivity extends AppCompatActivity implements View.OnClickListener {
+public class RemindersActivity extends AppCompatActivity implements View.OnClickListener, RemindersRecyclerAdapter.OnReminderListener {
 
     private RecyclerView mRecyclerView;
-    private ArrayList<Reminder> mReminder = new ArrayList<>();
+    private List<Reminder> mReminders = new ArrayList<>();
     private RemindersRecyclerAdapter mRemindersRecyclerAdapter;
 
     DatabaseHelper mDatabaseHelper;
 
     private ListView mListView;
 
+    private static final String TAG = "RemindersActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: start");
+        RemindersRepository instance = RemindersRepository.getInstance();
+        mReminders = instance.getReminders();
 
-        // We must extract those values from the payload
-        String title = getIntent().getStringExtra("ARG_TITLE");
-        String notes = getIntent().getStringExtra("ARG_NOTES");
-        String date = getIntent().getStringExtra("ARG_DATE");
-        String time = getIntent().getStringExtra("ARG_TIME");
+        Log.i("Logging -- Func_s", String.format("reminder %s", mReminders));
+        //Testing the values have been gathered as intended
 
-        Log.i("Logging -- Func_s", String.format("title %s", title));
-        Log.i("Logging -- Func_s", String.format("notes %s", notes));
-        Log.i("Logging -- Func_s", String.format("date %s", date));
-        Log.i("Logging -- Func_s", String.format("time %s", time));
-        
         setContentView(R.layout.activity_reminders);
         Button home = (Button) findViewById(R.id.button_home);
         home.setOnClickListener(this);
@@ -54,7 +54,7 @@ public class RemindersActivity extends AppCompatActivity implements View.OnClick
         newReminder.setOnClickListener(this);
 
         mRecyclerView = findViewById(R.id.recyclerView);
-
+        Log.d(TAG, "onCreate: setting recycler view");
         initRecyclerView();
 
     }
@@ -75,6 +75,7 @@ public class RemindersActivity extends AppCompatActivity implements View.OnClick
 
             default:
                 break;
+            //When one of the buttons is clicked, the associated intent begins and directs the app to the correct activity
         }
     }
 
@@ -82,7 +83,21 @@ public class RemindersActivity extends AppCompatActivity implements View.OnClick
     private void initRecyclerView(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRemindersRecyclerAdapter = new RemindersRecyclerAdapter(mReminder);
+        Log.d(TAG, "initRecyclerView: " + mReminders.size());
+        mRemindersRecyclerAdapter = new RemindersRecyclerAdapter(mReminders, this);
         mRecyclerView.setAdapter(mRemindersRecyclerAdapter);
+        //Creating the recycler view ready for data to be added
+    }
+
+    @Override
+    public void onReminderClick(Reminder reminder) {
+        Log.d(TAG, "onReminderClick: clicked" + reminder);
+
+        Intent clickedIntent = new Intent(this, ClickedReminderActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("ARG_REMINDER_ID", reminder.getId());
+        clickedIntent.putExtras(bundle);
+        startActivity(clickedIntent);
+        finish();
     }
 }

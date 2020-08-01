@@ -13,20 +13,24 @@
     <string name="faq">FAQ</string>
     <string name="question">Question:</string>
     <string name="answer">Answer:</string>
-    <string name="question1">This is the location of which a question will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="answer1">This is the location of which an answer will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="question2">This is the location of which a question will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="answer2">This is the location of which an answer will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="question3">This is the location of which a question will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="answer3">This is the location of which an answer will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="question4">This is the location of which a question will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="answer4">This is the location of which an answer will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="question5">This is the location of which a question will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="answer5">This is the location of which an answer will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="question6">This is the location of which a question will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="answer6">This is the location of which an answer will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="question7">This is the location of which a question will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
-    <string name="answer7">This is the location of which an answer will be positioned. This text is here as a placeholder until all the questions and answers to be included have been decided.</string>
+    <string name="question1">I\'m having some problems with the application. What should I do?</string>
+    <string name="answer1">The application is regularly updated to fix potential bugs and your issues may relate to needing to update the app. Visit the app store on your device and see if there is an
+    update available. If you update the app and are still having problems, contact us at RemindMe@Help.UK</string>
+    <string name="question2">How do I delete Reminders?</string>
+    <string name="answer2">On the Reminders page there are delete buttons next to your created reminders. Press the button next to the reminder you wish to delete.</string>
+    <string name="question3">The alarm sounds is too quiet. How do I increase the volume?</string>
+    <string name="answer3">On the settings page there is a slider to increase the volume within the app. If that still isn\'t loud enough, you may need to increase the volume on your device which can usually
+    be done via a button on the side of your device or through the device\'s settings.</string>
+    <string name="question4">The buttons and text on my screen is too small/doesn\'t look right. What is wrong?</string>
+    <string name="answer4">Your device might not align with any of the 6 screen sizes we cater for. We are working hard to improve the application so it works on even more device sizes.</string>
+    <string name="question5">How do I add an image to a reminder?</string>
+    <string name="answer5">First you must ensure the image you wish to use is inside a folder on your device. Next, when creating a new reminder, click the Add Image button and a list of your folders
+        will be displayed. Navigate to the location in which you have saved the image you wish to use and click on it. Simple! </string>
+    <string name="question6">Can I change the notification sound of the alarm?</string>
+    <string name="answer6">You certainly can, but this is not done within the Remind Me application. You must visit the settings within your device, go to notifications, look for Remind Me and change the sound
+    there.</string>
+    <string name="question7">I\'m not getting a notification on my device at the time a reminder is due to go off. How can I fix this?</string>
+    <string name="answer7">The problem may be related to your device\'s permissions. Go to the settings on your device, click on Remind Me and ensure it allows notifications.</string>
     <string name="settings">Settings</string>
     <string name="volume">Adjust alarm volume</string>
     <string name="pause">Pause all alarms</string>
@@ -53,5 +57,7 @@
     <string name="create">SET REMINDER</string>
     <string name="cancel">CANCEL</string>
     <string name="repeatable">How often do you want the reminder to repeat?</string>
+    <string name="back_button">BACK</string>
+    <string name="vibrate">Vibration Off/On</string>
 
 </resources>

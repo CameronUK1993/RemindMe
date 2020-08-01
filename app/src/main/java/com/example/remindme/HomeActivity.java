@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         extras.setOnClickListener(this);
         Button reminders = (Button) findViewById(R.id.button_reminders);
         reminders.setOnClickListener(this);
-        /*Directs the call to the created onClick method*/
+        // Sets up listeners for when any of the buttons are clicked by the user
     }
 
     @Override
@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             default:
                 break;
-                /*this method allows for all the onClicks to be handled in one place rather than creating a separate method for each button click*/
+                // When a particular button is clicked, that button will start an intent which directs the user to the appropriate activity
         }
     }
 
