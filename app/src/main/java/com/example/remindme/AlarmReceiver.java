@@ -13,6 +13,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.app.TaskStackBuilder;
 
 import com.example.remindme.models.Reminder;
 import com.example.remindme.utility.RemindersRepository;
@@ -36,14 +37,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         String id = intent.getStringExtra(REMINDER_ID);
         Log.d(TAG, "onReceive: " + id);
         RemindersRepository instance = RemindersRepository.getInstance();
-        Reminder reminder = instance.getReminder(id);
 
         Log.i("Logging -- Func_s", String.format("reminder %s", id));
 
         String reminderTitle = intent.getStringExtra(REMINDER_TITLE);
 
         Intent intentAction = new Intent(context, ClickedReminderActivity.class);
-        intentAction.putExtra(ClickedReminderActivity.ARG_REMINDER_ID, REMINDER_ID);
+        intentAction.putExtra(ClickedReminderActivity.ARG_REMINDER_ID, id);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(intentAction);
+        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         PendingIntent pi = PendingIntent.getActivity(context, 0, intentAction, 0);
         String channelId = "Channel_id";

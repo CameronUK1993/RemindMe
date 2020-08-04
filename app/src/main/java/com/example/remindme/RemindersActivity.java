@@ -25,7 +25,7 @@ import com.example.remindme.utility.RemindersRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemindersActivity extends AppCompatActivity implements View.OnClickListener, RemindersRecyclerAdapter.OnReminderListener {
+public class RemindersActivity extends AppCompatActivity implements View.OnClickListener, RemindersRecyclerAdapter.OnReminderListener, RemindersRecyclerAdapter.OnDeleteListener {
 
     private RecyclerView mRecyclerView;
     private List<Reminder> mReminders = new ArrayList<>();
@@ -84,7 +84,7 @@ public class RemindersActivity extends AppCompatActivity implements View.OnClick
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         Log.d(TAG, "initRecyclerView: " + mReminders.size());
-        mRemindersRecyclerAdapter = new RemindersRecyclerAdapter(mReminders, this);
+        mRemindersRecyclerAdapter = new RemindersRecyclerAdapter(mReminders, this, this);
         mRecyclerView.setAdapter(mRemindersRecyclerAdapter);
         //Creating the recycler view ready for data to be added
     }
@@ -99,5 +99,10 @@ public class RemindersActivity extends AppCompatActivity implements View.OnClick
         clickedIntent.putExtras(bundle);
         startActivity(clickedIntent);
         finish();
+    }
+
+    @Override
+    public void onDeleteClick(Reminder reminder) {
+        Log.d(TAG, "onDeleteClick: clicked");
     }
 }

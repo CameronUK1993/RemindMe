@@ -43,6 +43,7 @@ public class ClickedReminderActivity extends AppCompatActivity implements View.O
 
         Bundle bundle = getIntent().getExtras();
         String id = bundle.getString(ARG_REMINDER_ID);
+        Log.d(TAG, "onCreate: id "+ id);
         Reminder reminder = repository.getReminder(id);
 
             Log.d(TAG, "onCreate: " + id);
